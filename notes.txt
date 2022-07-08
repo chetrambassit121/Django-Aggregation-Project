@@ -1,0 +1,30 @@
+This project is an extenstion of   ....   https://github.com/chetrambassit121/Django-Import-CSV-File  
+we will use that project to develop aggregation logic.
+https://docs.djangoproject.com/en/4.0/topics/db/aggregation/
+
+
+
+terminal shell commands:
+
+(virtual) PS C:\c\Django-Aggregation\django_aggregation> py manage.py shell
+Python 3.8.2 (tags/v3.8.2:7b3ab59, Feb 25 2020, 22:45:29) [MSC v.1916 32 bit (Intel)] on win32
+Type "help", "copyright", "credits" or "license" for more information.
+(InteractiveConsole)
+>>> from book.models import Book
+>>> Book.objects.count()
+8471                                           # got the total number of rows 
+>>>
+
+(virtual) PS C:\c\Django-Aggregation\django_aggregation> py manage.py shell 
+Python 3.8.2 (tags/v3.8.2:7b3ab59, Feb 25 2020, 22:45:29) [MSC v.1916 32 bit (Intel)] on win32
+Type "help", "copyright", "credits" or "license" for more information.
+(InteractiveConsole)
+>>> from book.models import Book
+>>> from django.db.models import Sum
+>>> Book.objects.aggregate(Sum('ratings_count'))
+{'ratings_count__sum': 164592656}                                    # got the total number of the feild ratings_count (since its in integers) , returns a dictionary {key:value}
+>>>
+
+>>> Book.objects.all().aggregate(new_name=Sum('ratings_count'))      # changed the name of the key 
+{'new_name': 164592656}
+>>>
